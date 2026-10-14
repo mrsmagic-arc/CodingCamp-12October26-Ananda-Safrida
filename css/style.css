@@ -1,0 +1,860 @@
+/* ============================================================
+   LIFE DASHBOARD — style.css
+   Single CSS file. Covers: reset, variables, layout, components,
+   dark mode, and responsive design.
+   Theme: Nezuko (Demon Slayer) — pink, black, sage green, gold
+   ============================================================ */
+
+/* ---------- CSS VARIABLES (Nezuko Light Mode) ---------- */
+:root {
+  /* Background: soft blush pink parchment */
+  --bg:           #fdf0f5;
+  --surface:      #ffffff;
+  --surface-alt:  #fce8f1;
+  --border:       #f0c0d8;
+  /* Text */
+  --text:         #1a0a12;
+  --text-muted:   #8c5a6e;
+  /* Accent: Nezuko's kimono pink → magenta */
+  --accent:       #d63384;
+  --accent-hover: #b5206b;
+  --accent-text:  #ffffff;
+  /* Semantic */
+  --danger:       #c0392b;
+  --success:      #5a9e6f;   /* sage green — haori pattern */
+  --warning:      #d4860a;   /* warm gold — bamboo muzzle */
+  /* Shadows */
+  --shadow:       0 2px 14px rgba(214, 51, 132, 0.10);
+  --shadow-lg:    0 8px 32px rgba(214, 51, 132, 0.18);
+  /* Shape & font */
+  --radius:       14px;
+  --radius-sm:    8px;
+  --font:         'Segoe UI', system-ui, -apple-system, sans-serif;
+  --transition:   0.2s ease;
+}
+
+/* ---------- Nezuko Dark Mode — kimono night palette ---------- */
+[data-theme="dark"] {
+  /* Background: deep dark ink — like night demon battle */
+  --bg:           #120009;
+  --surface:      #1e0113;
+  --surface-alt:  #2a0520;
+  --border:       #5a1a3a;
+  /* Text */
+  --text:         #f8e4ee;
+  --text-muted:   #c98aaa;
+  /* Accent: brighter pink for dark bg */
+  --accent:       #ff6eb4;
+  --accent-hover: #e84fa0;
+  --accent-text:  #1a0a12;
+  /* Shadows */
+  --shadow:       0 2px 14px rgba(255, 110, 180, 0.18);
+  --shadow-lg:    0 8px 32px rgba(255, 110, 180, 0.28);
+  --shadow-lg:    0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- RESET & BASE ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+}
+
+ul { list-style: none; }
+
+button {
+  cursor: pointer;
+  font-family: var(--font);
+  border: none;
+  outline: none;
+}
+
+input {
+  font-family: var(--font);
+  outline: none;
+}
+
+/* ---------- TOPBAR ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.clock {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+}
+
+.date-display {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.topbar-right {
+  display: flex;
+  gap: 8px;
+}
+
+/* ---------- ICON BUTTON ---------- */
+.icon-btn {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  width: 38px;
+  height: 38px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition), transform var(--transition);
+  color: var(--text);
+}
+
+.icon-btn:hover {
+  background: var(--border);
+  transform: scale(1.06);
+}
+
+/* ---------- GREETING ---------- */
+.greeting-section {
+  text-align: center;
+  padding: 40px 20px 20px;
+}
+
+.greeting {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  /* Nezuko: pink → deep magenta → gold */
+  background: linear-gradient(135deg, #ff6eb4 0%, #d63384 45%, #d4860a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.greeting-sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 6px;
+}
+
+/* ---------- DASHBOARD GRID ---------- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+  padding: 20px 28px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---------- CARD ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: box-shadow var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: background var(--transition), transform var(--transition), opacity var(--transition);
+  border: 1px solid transparent;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+.btn-primary:hover { background: var(--accent-hover); }
+
+.btn-secondary {
+  background: var(--surface-alt);
+  border-color: var(--border);
+  color: var(--text);
+}
+.btn-secondary:hover { background: var(--border); }
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+.btn-ghost:hover {
+  background: var(--surface-alt);
+  color: var(--text);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+.btn-danger:hover { opacity: 0.85; }
+
+.btn-sm { padding: 6px 13px; font-size: 0.82rem; }
+
+/* ============================================================
+   TIMER CARD
+   ============================================================ */
+.timer-display {
+  font-size: 4rem;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  margin: 10px 0 16px;
+  font-variant-numeric: tabular-nums;
+  transition: color var(--transition);
+}
+
+.timer-display.running { color: var(--success); }
+.timer-display.paused  { color: var(--warning); }
+
+/* Mode tabs */
+.timer-mode-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+.mode-tab {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: all var(--transition);
+}
+
+.mode-tab:hover { border-color: var(--accent); color: var(--accent); }
+
+.mode-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Timer controls */
+.timer-controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* Timer duration settings */
+.timer-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.timer-settings label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.duration-input {
+  width: 62px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.duration-input:focus { border-color: var(--accent); }
+
+.session-count {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   TO-DO CARD
+   ============================================================ */
+.todo-input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 9px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text);
+  font-size: 0.9rem;
+  transition: border-color var(--transition);
+}
+
+.todo-input:focus { border-color: var(--accent); background: var(--surface); }
+
+/* Filters */
+.todo-filters {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.filter-btn {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: all var(--transition);
+}
+
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Task list */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-bottom: 12px;
+}
+
+.todo-list::-webkit-scrollbar { width: 5px; }
+.todo-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* Single task item */
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+  animation: slideIn 0.18s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.todo-item:hover { border-color: var(--accent); }
+
+.todo-item.done .todo-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* Custom checkbox */
+.todo-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--transition);
+  position: relative;
+}
+
+.todo-checkbox:checked {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.todo-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.todo-checkbox:hover { border-color: var(--accent); }
+
+.todo-text {
+  flex: 1;
+  font-size: 0.9rem;
+  word-break: break-word;
+  cursor: pointer;
+}
+
+.todo-edit-input {
+  flex: 1;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.todo-action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+.todo-action-btn:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+.todo-action-btn.delete:hover {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+
+/* Footer */
+.todo-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.todo-count {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Empty state */
+.todo-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  padding: 24px 0;
+}
+
+/* ============================================================
+   QUICK LINKS CARD
+   ============================================================ */
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+  min-height: 40px;
+}
+
+.link-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: center;
+  word-break: break-all;
+  transition: all var(--transition);
+  animation: slideIn 0.18s ease;
+}
+
+.link-item:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  color: var(--accent);
+}
+
+.link-favicon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.link-delete-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--danger);
+  color: #fff;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition);
+  border: none;
+  cursor: pointer;
+}
+
+.link-item:hover .link-delete-btn { opacity: 1; }
+
+/* Add link form */
+.link-add-form {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.link-input {
+  flex: 1;
+  min-width: 110px;
+  padding: 7px 11px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text);
+  font-size: 0.83rem;
+  transition: border-color var(--transition);
+}
+
+.link-input:focus {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+/* ============================================================
+   SETTINGS MODAL
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(3px);
+}
+
+.modal-overlay[hidden] { display: none; }
+
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: min(420px, 92vw);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.94) translateY(-10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 { font-size: 1.05rem; font-weight: 700; }
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.modal-body { padding: 22px; }
+
+.setting-label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.setting-input {
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text);
+  font-size: 0.92rem;
+  transition: border-color var(--transition);
+}
+
+.setting-input:focus { border-color: var(--accent); background: var(--surface); }
+
+.modal-footer {
+  padding: 14px 22px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 640px) {
+  .topbar { padding: 12px 16px; }
+  .greeting-section { padding: 24px 16px 12px; }
+  .dashboard-grid { padding: 14px 16px 32px; gap: 14px; }
+  .card { padding: 18px 16px; }
+  .clock { font-size: 1.1rem; }
+  .timer-display { font-size: 3rem; }
+  .timer-controls { gap: 6px; }
+  .link-add-form { flex-direction: column; }
+}
+
+@media (min-width: 1100px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr 1.1fr 1fr;
+  }
+}
+
+/* ============================================================
+   NEZUKO THEME — decorative overrides
+   ============================================================ */
+
+/* Body: subtle hemp-leaf (asanoha) geometric pattern overlay
+   using a CSS repeating gradient approximation               */
+body {
+  background-image:
+    repeating-linear-gradient(
+      60deg,
+      rgba(214, 51, 132, 0.04) 0px,
+      rgba(214, 51, 132, 0.04) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    repeating-linear-gradient(
+      -60deg,
+      rgba(214, 51, 132, 0.04) 0px,
+      rgba(214, 51, 132, 0.04) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(214, 51, 132, 0.03) 0px,
+      rgba(214, 51, 132, 0.03) 1px,
+      transparent 1px,
+      transparent 18px
+    );
+}
+
+[data-theme="dark"] body,
+[data-theme="dark"] {
+  background-image:
+    repeating-linear-gradient(
+      60deg,
+      rgba(255, 110, 180, 0.05) 0px,
+      rgba(255, 110, 180, 0.05) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    repeating-linear-gradient(
+      -60deg,
+      rgba(255, 110, 180, 0.05) 0px,
+      rgba(255, 110, 180, 0.05) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 110, 180, 0.04) 0px,
+      rgba(255, 110, 180, 0.04) 1px,
+      transparent 1px,
+      transparent 18px
+    );
+}
+
+/* Topbar: pink-tinted border bottom */
+.topbar {
+  border-bottom-color: var(--border);
+  border-bottom-width: 2px;
+}
+
+/* Cards: left accent stripe in Nezuko pink */
+.card {
+  border-left: 3px solid var(--accent);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle petal watermark in card corner */
+.card::before {
+  content: '🌸';
+  position: absolute;
+  bottom: -8px;
+  right: 4px;
+  font-size: 4.5rem;
+  opacity: 0.055;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
+/* Timer display: use gold when idle to echo bamboo muzzle */
+.timer-display {
+  color: var(--warning);
+}
+.timer-display.running { color: var(--accent); }
+.timer-display.paused  { color: var(--success); }
+
+/* Clock: gold accent */
+.clock { color: var(--warning); }
+
+/* Mode tabs active: pink */
+.mode-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Filter/mode tabs hover */
+.mode-tab:hover,
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Checkbox done: Nezuko pink */
+.todo-checkbox:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Link card hover: pink border */
+.link-item:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Primary button: keep accent but add warm glow */
+.btn-primary {
+  box-shadow: 0 2px 10px rgba(214, 51, 132, 0.25);
+}
+.btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(214, 51, 132, 0.38);
+}
+
+/* Settings modal header: pink stripe */
+.modal-header {
+  border-bottom: 2px solid var(--accent);
+}
+
+/* Scrollbar thumb: pink */
+.todo-list::-webkit-scrollbar-thumb {
+  background: rgba(214, 51, 132, 0.35);
+}
+
+/* Todo item hover: pink border */
+.todo-item:hover { border-color: var(--accent); }
+
+/* Greeting subtitle: muted pink */
+.greeting-sub { color: var(--text-muted); }
