@@ -58,7 +58,7 @@ Inspired by **Nezuko Kamado** from *Demon Slayer: Kimetsu no Yaiba*:
 3. No installation, no server, no build step needed
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git clone https://mrsmagic-arc/CodingCamp-12October26-Ananda Safrida.git
 # then just open index.html
 ```
 
