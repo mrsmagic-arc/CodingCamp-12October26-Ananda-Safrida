@@ -3,7 +3,7 @@
 > A beautiful Nezuko-themed personal dashboard built with pure HTML, CSS, and Vanilla JavaScript.  
 > No frameworks. No backend. Everything runs in the browser.
 
-🔗 **Live Demo:** [GitHub Pages link here after deploy]
+🔗 **Live Demo:** https://mrsmagic-arc.github.io/CodingCamp-12October26-Ananda-Safrida/
 
 ---
 
