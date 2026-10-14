@@ -155,11 +155,16 @@ input {
   font-size: clamp(1.6rem, 4vw, 2.6rem);
   font-weight: 800;
   letter-spacing: -0.02em;
-  /* Nezuko: pink → deep magenta → gold */
+  line-height: 1.2;
+}
+
+/* Gradient applied to the inner span injected by JS */
+.greeting span {
   background: linear-gradient(135deg, #ff6eb4 0%, #d63384 45%, #d4860a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  display: inline-block;
 }
 
 .greeting-sub {

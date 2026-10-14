@@ -45,13 +45,28 @@ function updateClock() {
 function updateGreeting() {
   const h    = new Date().getHours();
   const name = store.get('customName', '');
-  let salutation;
-  if (h < 5)       salutation = 'Good Night';
-  else if (h < 12) salutation = 'Good Morning';
-  else if (h < 17) salutation = 'Good Afternoon';
-  else if (h < 21) salutation = 'Good Evening';
-  else             salutation = 'Good Night';
-  greetingEl.textContent = name ? `${salutation}, ${name}! 👋` : `${salutation}! 👋`;
+
+  let salutation, emoji;
+  if (h >= 5 && h < 12) {
+    salutation = 'Good Morning';
+    emoji      = '☀️';
+  } else if (h >= 12 && h < 17) {
+    salutation = 'Good Afternoon';
+    emoji      = '🌤️';
+  } else if (h >= 17 && h < 21) {
+    salutation = 'Good Evening';
+    emoji      = '🌸';
+  } else {
+    salutation = 'Good Night';
+    emoji      = '🌙';
+  }
+
+  // Use a <span> inside so gradient text renders reliably across browsers
+  const text = name
+    ? `${emoji} ${salutation}, ${name}!`
+    : `${emoji} ${salutation}!`;
+
+  greetingEl.innerHTML = `<span>${text}</span>`;
 }
 
 updateClock();

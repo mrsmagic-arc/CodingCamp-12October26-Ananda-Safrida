@@ -1,0 +1,15 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE (keep .kiro — required by assignment)
+.vscode/
+*.suo
+*.user
+
+# Logs
+*.log
+
+# Node (not used, but just in case)
+node_modules/
